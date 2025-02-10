@@ -33,9 +33,13 @@ git-clone-1-17-0          This object represe...   5 days ago
 ## run:
 ```
 tkn pipeline start build-image \
-    --prefix-name prefixName42 \
     -w name=shared-workspace,claimName=pipeline-workspace \
     -p git-url=https://github.com/DanielFroehlich/microshift-pipeline.git  \
     -p IMAGE=quay.coe.muc.redhat.com/dfroehli/test \
     --use-param-defaults
-``
+```
+
+# Debug helpers
+
+## Better understand a cluster task:
+`tkn tasks describe buildah -n openshift-pipelines`

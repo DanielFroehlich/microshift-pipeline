@@ -24,10 +24,14 @@ spec:
   - name: git-revision
     type: string
     description: revision to be used from repo of the code for deployment
-    default: master
+    default: main
   - name: IMAGE
     type: string
     description: image to be build from the code
+  - name: CONTAINERFILE
+    type: string
+    description: Path in the gitrep to the Containerfile of the image to be build
+    default: "./Containerfile"
   tasks:
   - name: fetch-repository
     taskRef:
@@ -48,7 +52,7 @@ spec:
     - name: SUBDIRECTORY
       value: ""
     - name: DELETE_EXISTING
-      value: "true"
+      value: "false"
     - name: REVISION
       value: $(params.git-revision)
   - name: build-image
@@ -64,6 +68,13 @@ spec:
     params:
     - name: IMAGE
       value: $(params.IMAGE)
+    - name: DOCKERFILE
+      value: $(params.CONTAINERFILE)
+    - name: TLS_VERIFY
+      value: false
+    - name: VERBOSE
+      value: true
+
     workspaces:
     - name: source
       workspace: shared-workspace
