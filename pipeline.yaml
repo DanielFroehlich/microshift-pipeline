@@ -16,7 +16,8 @@ metadata:
   name: build-image
 spec:
   workspaces:
-  - name: shared-workspace
+  - name: shared
+  - name: registry
   params:
   - name: git-url
     type: string
@@ -45,7 +46,7 @@ spec:
         value: openshift-pipelines
     workspaces:
     - name: output
-      workspace: shared-workspace
+      workspace: shared
     params:
     - name: URL
       value: $(params.git-url)
@@ -74,9 +75,10 @@ spec:
       value: false
     - name: VERBOSE
       value: true
-
     workspaces:
     - name: source
-      workspace: shared-workspace
+      workspace: shared
+    - name: dockerconfig
+      workspace: registry
     runAfter:
     - fetch-repository

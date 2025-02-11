@@ -24,6 +24,17 @@ git-clone                 This object represe...   4 days ago
 git-clone-1-17-0          This object represe...   5 days ago
 ```
 
+## Registry Repo and Robo-Account
+We use https://quay.coe.muc.redhat.com/repository/dfroehli/test?tab=info in the following
+Download the robo secret from quay and apply it
+we use `coe-quay` as the name in the following.
+We create it from the dockerconfig, as we have several differnt accounts to add, and that is more transparent:
+
+```
+oc create secret docker-registry coe-quay --from-file=.dockerconfigjson=secret-coe-quay-cfg.json
+```
+
+
 # Install and run pipelines
 
 ## install
@@ -33,13 +44,19 @@ git-clone-1-17-0          This object represe...   5 days ago
 ## run:
 ```
 tkn pipeline start build-image \
-    -w name=shared-workspace,claimName=pipeline-workspace \
+    -w name=shared,claimName=pipeline-workspace \
+    -w name=registry,secret=coe-quay \
     -p git-url=https://github.com/DanielFroehlich/microshift-pipeline.git  \
-    -p IMAGE=quay.coe.muc.redhat.com/dfroehli/test \
+    -p IMAGE=quay.coe.muc.redhat.com/shared/dfroehli/test \
     --use-param-defaults
 ```
 
 # Debug helpers
 
 ## Better understand a cluster task:
-`tkn tasks describe buildah -n openshift-pipelines`
+```
+tkn tasks describe buildah -n openshift-pipelines
+```
+
+## Debug a failed task
+One can actually "oc debug pod/...." into a failed task and look around, e.g. how the workspaces look like
