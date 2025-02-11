@@ -44,10 +44,11 @@ oc create secret docker-registry coe-quay --from-file=.dockerconfigjson=secret-c
 ## run:
 ```
 tkn pipeline start build-image \
-    -w name=shared,claimName=pipeline-workspace \
-    -w name=registry,secret=coe-quay \
-    -p git-url=https://github.com/DanielFroehlich/microshift-pipeline.git  \
-    -p IMAGE=quay.coe.muc.redhat.com/shared/dfroehli/test \
+    --prefix-name test \
+    --workspace name=shared,claimName=pipeline-workspace \
+    --workspace name=registry,secret=coe-quay \
+    --param git-url=https://github.com/DanielFroehlich/microshift-pipeline.git  \
+    --param IMAGE=quay.coe.muc.redhat.com/shared/dfroehli/test \
     --use-param-defaults
 ```
 
