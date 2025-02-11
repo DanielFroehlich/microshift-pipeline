@@ -34,6 +34,15 @@ We create it from the dockerconfig, as we have several differnt accounts to add,
 oc create secret docker-registry coe-quay --from-file=.dockerconfigjson=secret-coe-quay-cfg.json
 ```
 
+## Entitlement
+We need to do entiteld builds, as we need additonal packages from Red Hat repos.
+See the docs on how to get the entitlement secret:
+https://docs.openshift.com/pipelines/1.17/create/using-rh-entitlements-pipelines.html
+
+```
+oc create -f secret-redhat-entitlement.json
+```
+
 
 # Install and run pipelines
 
@@ -47,6 +56,7 @@ tkn pipeline start build-image \
     --prefix-name test \
     --workspace name=shared,claimName=pipeline-workspace \
     --workspace name=registry,secret=coe-quay \
+    --workspace name=rhel-entitlement,secret=etc-pki-entitlement \
     --param git-url=https://github.com/DanielFroehlich/microshift-pipeline.git  \
     --param IMAGE=quay.coe.muc.redhat.com/shared/dfroehli/test \
     --use-param-defaults

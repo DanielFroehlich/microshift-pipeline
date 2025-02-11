@@ -18,6 +18,7 @@ spec:
   workspaces:
   - name: shared
   - name: registry
+  - name: rhel-entitlement
   params:
   - name: git-url
     type: string
@@ -80,5 +81,7 @@ spec:
       workspace: shared
     - name: dockerconfig
       workspace: registry
+    - name: rhel-entitlement
+      workspace: rhel-entitlement
     runAfter:
     - fetch-repository
