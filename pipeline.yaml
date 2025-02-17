@@ -8,7 +8,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 500Mi
+      storage: 20Gi
 ---
 apiVersion: tekton.dev/v1
 kind: Pipeline
