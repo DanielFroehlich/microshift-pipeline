@@ -76,6 +76,7 @@ tkn pipeline start build-image \
     --workspace name=rhel-entitlement,secret=etc-pki-entitlement \
     --param git-url=https://github.com/DanielFroehlich/tools-image.git  \
     --param IMAGE=quay.io/dfroehli/tools \
+    --param VERBOSE=true \
     --use-param-defaults
 ```
 
